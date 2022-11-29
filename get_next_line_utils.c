@@ -6,7 +6,7 @@
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:07:30 by naterrie          #+#    #+#             */
-/*   Updated: 2022/11/29 14:43:31 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2022/11/29 19:15:12 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,45 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char	*strjoin(char *s1, char *s2)
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+	{
+		((char *)s)[i] = 0;
+		i++;
+	}
+}
+
+void	*ft_calloc(size_t count, size_t size)
 {
 	char	*str;
-	int		i;
-	int		j;
+	size_t	i;
 
-	if (!s1 && !s2)
+	i = 0;
+	if (size > 0 && count >= SIZE_MAX / size)
 		return (NULL);
+	str = malloc((sizeof(char) * (count * size)));
+	if (!str)
+		return (NULL);
+	ft_bzero(str, size * count);
+	return ((void *)str);
+}
+
+char	*ft_strchr(char *s, int c)
+{
+	int	i;
+
 	i = 0;
-	j = 0;
-	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	while (!s1[i])
+	while (s[i])
 	{
-		str[i] = s1[i];
+		if (s[i] == (char)c)
+			return ((char *)(s + i));
 		i++;
 	}
-	i = 0;
-	while (!s2[j])
-	{
-		str[i] = s2[j];
-		i++;
-		j++;
-	}
-	str[i] = '\0';
-	return (str);
+	if (s[i] == '\0')
+		return ((char *)(s + i));
+	return (NULL);
 }
