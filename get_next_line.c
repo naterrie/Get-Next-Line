@@ -6,35 +6,39 @@
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:07:31 by naterrie          #+#    #+#             */
-/*   Updated: 2022/11/29 19:20:34 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2022/11/30 19:25:10 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*read_file(int fd, char *res)
+char	*read_file(int fd, char *buf)
 {
-	char	*buf;
 	int		byte_read;
+	char	*res;
 
-	if (!res)
-		res = ft_calloc(1, 1);
-	buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	printf("ici c'est bon(readfile)\n");
+	if (!buf)
+	{
+		buf = ft_calloc(sizeof(char), 1);
+		buf[1] = 0;
+	}
+	res = ft_calloc(sizeof(char), (BUFFER_SIZE + 1));
 	byte_read = 1;
 	while (byte_read > 0)
 	{
-		byte_read = read(fd, buf, BUFFER_SIZE);
+		byte_read = read(fd, res, BUFFER_SIZE);
 		if (byte_read == -1)
 		{
-			free(buf);
+			free(res);
 			return (NULL);
 		}
-		buf[byte_read] = 0;
-		if (ft_strchr(buf, '\n'))
+		res[byte_read] = 0;
+		if (ft_strchr(res, '\n'))
 			break ;
 	}
-	free(buf);
-	return (res);
+	free(res);
+	return (buf);
 }
 
 char	*ft_buf(char *buf)
@@ -51,7 +55,7 @@ char	*ft_buf(char *buf)
 		free(buf);
 		return (NULL);
 	}
-	line = ft_calloc((ft_strlen(buf) - i + 1), sizeof(char));
+	line = ft_calloc(sizeof(char), (ft_strlen(buf) - i + 1));
 	i++;
 	j = 0;
 	while (buf[i])
@@ -70,9 +74,9 @@ char	*ft_line(char *buf)
 		return (NULL);
 	while (buf[i] && buf[i] != '\n')
 		i++;
-	line = ft_calloc(i + 2, sizeof(char));
+	line = ft_calloc(sizeof(char), i + 1);
 	i = 0;
-	while (buf [i] && buf[i] != '\n')
+	while (buf[i] && buf[i] != '\n')
 	{
 		line[i] = buf[i];
 		i++;
@@ -87,11 +91,11 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*buf;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) <= 0 || \
+		read(fd, buf, BUFFER_SIZE) == -1)
 		return (NULL);
 	buf = read_file(fd, buf);
-	if (!buf)
-		return (buf);
+	printf("ici c'est bon(read_files_end)\n");
 	line = ft_line(buf);
 	buf = ft_buf(buf);
 	return (line);

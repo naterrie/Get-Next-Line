@@ -6,7 +6,7 @@
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:07:33 by naterrie          #+#    #+#             */
-/*   Updated: 2022/11/29 19:15:24 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2022/11/30 17:43:13 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <stdio.h>
 
 void	*ft_calloc(size_t count, size_t size);
-
-void	ft_bzero(void *s, size_t n);
 
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strchr(char *s, int c);
