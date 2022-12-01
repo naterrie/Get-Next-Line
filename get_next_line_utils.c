@@ -6,56 +6,67 @@
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:07:30 by naterrie          #+#    #+#             */
-/*   Updated: 2022/11/30 19:18:27 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2022/12/01 16:56:58 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(char *str)
+size_t	ft_strlen(char *s)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	printf("ici c'est bon(strlen)\n");
-	if (!str)
+	if (!s)
 		return (0);
-	while (str[i])
+	while (s[i] != '\0')
 		i++;
 	return (i);
 }
 
-void	*ft_calloc(size_t count, size_t size)
-{
-	char	*str;
-	size_t	i;
-
-	i = 0;
-	printf("ici c'est bon(calloc)\n");
-	str = malloc(sizeof(char) * (size * count));
-	if (!str)
-		return (NULL);
-	while (str[i])
-	{
-		str[i] = 0;
-		i++;
-	}
-	return (str);
-}
-
-char	*ft_strchr(char *s, int c)
+size_t	ft_strchr(char *s, int c)
 {
 	int	i;
 
 	i = 0;
-	printf("ici c'est bon(strchr)\n");
+	if (!s)
+		return (0);
+	if (!c)
+		return (ft_strlen(s));
 	while (s[i])
 	{
-		if (s[i] == (char)c)
-			return ((char *)(s + i));
+		if (s[i] == (char) c)
+			return (1);
 		i++;
 	}
-	if (s[i] == '\0')
-		return ((char *)(s + i));
-	return (NULL);
+	return (0);
+}
+
+char	*ft_strjoin(char *left_str, char *buf)
+{
+	size_t	i;
+	size_t	j;
+	char	*str;
+
+	if (!left_str)
+	{
+		left_str = malloc(sizeof(char) * 1);
+		if (!left_str)
+			return (NULL);
+		left_str[0] = '\0';
+	}
+	if (!buf)
+		return (NULL);
+	str = malloc(sizeof(char) * (ft_strlen(left_str) + ft_strlen(buf) + 1));
+	if (!str)
+		return (NULL);
+	i = -1;
+	j = 0;
+	while (left_str[++i])
+		str[i] = left_str[i];
+	while (buf[j] != '\0')
+		str[i++] = buf[j++];
+	str[ft_strlen(left_str) + ft_strlen(buf)] = '\0';
+	free(left_str);
+	return (str);
 }

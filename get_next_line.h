@@ -6,22 +6,27 @@
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:07:33 by naterrie          #+#    #+#             */
-/*   Updated: 2022/11/30 17:43:13 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2022/12/01 18:20:32 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
 
-void	*ft_calloc(size_t count, size_t size);
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 8
+# endif
 
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_strchr(char *s, int c);
+size_t	ft_strlen(char *s);
+size_t	ft_strchr(char *s, int c);
+
 char	*get_next_line(int fd);
-
-int		ft_strlen(char *str);
+char	*ft_get_line(char *left_str);
+char	*ft_new_left_str(char *left_str);
+char	*ft_strjoin(char *left_str, char *buf);
+char	*ft_read_to_left_str(int fd, char *left_str);
 
 #endif
