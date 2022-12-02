@@ -6,7 +6,7 @@
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:07:30 by naterrie          #+#    #+#             */
-/*   Updated: 2022/12/01 16:56:58 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2022/12/02 17:29:35 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(char *s)
 	return (i);
 }
 
-size_t	ft_strchr(char *s, int c)
+int	ft_strchr(char *s, int c)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ size_t	ft_strchr(char *s, int c)
 	if (!s)
 		return (0);
 	if (!c)
-		return (ft_strlen(s));
+		return (0);
 	while (s[i])
 	{
 		if (s[i] == (char) c)
@@ -42,31 +42,31 @@ size_t	ft_strchr(char *s, int c)
 	return (0);
 }
 
-char	*ft_strjoin(char *left_str, char *buf)
+char	*ft_strjoin(char *buf, char *temp)
 {
 	size_t	i;
 	size_t	j;
 	char	*str;
 
-	if (!left_str)
-	{
-		left_str = malloc(sizeof(char) * 1);
-		if (!left_str)
-			return (NULL);
-		left_str[0] = '\0';
-	}
 	if (!buf)
+	{
+		buf = malloc(sizeof(char) * 1);
+		if (!buf)
+			return (NULL);
+		buf[0] = '\0';
+	}
+	if (!temp)
 		return (NULL);
-	str = malloc(sizeof(char) * (ft_strlen(left_str) + ft_strlen(buf) + 1));
+	str = malloc(sizeof(char) * (ft_strlen(buf) + ft_strlen(temp) + 1));
 	if (!str)
 		return (NULL);
 	i = -1;
 	j = 0;
-	while (left_str[++i])
-		str[i] = left_str[i];
-	while (buf[j] != '\0')
-		str[i++] = buf[j++];
-	str[ft_strlen(left_str) + ft_strlen(buf)] = '\0';
-	free(left_str);
+	while (buf[++i])
+		str[i] = buf[i];
+	while (temp[j] != '\0')
+		str[i++] = temp[j++];
+	str[ft_strlen(buf) + ft_strlen(temp)] = '\0';
+	free(buf);
 	return (str);
 }
