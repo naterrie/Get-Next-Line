@@ -6,7 +6,7 @@
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:07:33 by naterrie          #+#    #+#             */
-/*   Updated: 2022/12/02 19:09:03 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2022/12/03 15:59:31 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10000
+#  define BUFFER_SIZE 1
 # endif
 
 size_t	ft_strlen(char *s);
@@ -25,9 +25,9 @@ size_t	ft_strlen(char *s);
 int		ft_strchr(char *s, int c);
 
 char	*get_next_line(int fd);
-char	*ft_new_buf(char *buf);
+char	*ft_next_buf(char *buf);
 char	*ft_get_line(char *buf);
+char	*ft_read_line(int fd, char *buf);
 char	*ft_strjoin(char *buf, char *temp);
-char	*ft_read_to_buf(int fd, char *buf);
 
 #endif

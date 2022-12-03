@@ -1,6 +1,0 @@
-ligne 1 beaucoup de caractere
-ligne 2 beaucoup de caractere
-ligne 3 beaucoup de caractere
-ligne 4 beaucoup de caractere
-ligne 5 beaucoup de caractere
-ligne 6 beaucoup de caractere

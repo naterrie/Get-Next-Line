@@ -6,11 +6,17 @@
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:07:30 by naterrie          #+#    #+#             */
-/*   Updated: 2022/12/02 17:29:35 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2022/12/03 17:04:55 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+# include <stdlib.h>
+# include <unistd.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
 size_t	ft_strlen(char *s)
 {
@@ -59,7 +65,7 @@ char	*ft_strjoin(char *buf, char *temp)
 		return (NULL);
 	str = malloc(sizeof(char) * (ft_strlen(buf) + ft_strlen(temp) + 1));
 	if (!str)
-		return (NULL);
+		return (free(buf), NULL);
 	i = -1;
 	j = 0;
 	while (buf[++i])
@@ -67,6 +73,5 @@ char	*ft_strjoin(char *buf, char *temp)
 	while (temp[j] != '\0')
 		str[i++] = temp[j++];
 	str[ft_strlen(buf) + ft_strlen(temp)] = '\0';
-	free(buf);
-	return (str);
+	return (free(buf), str);
 }

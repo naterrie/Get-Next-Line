@@ -6,7 +6,7 @@
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:07:31 by naterrie          #+#    #+#             */
-/*   Updated: 2022/12/02 20:03:20 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2022/12/03 17:06:14 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_get_line(char *buf)
 	return (str);
 }
 
-char	*ft_new_buf(char *buf)
+char	*ft_next_buf(char *buf)
 {
 	int		i;
 	int		j;
@@ -81,6 +81,7 @@ char	*ft_read_line(int fd, char *buf)
 		if (bytes == -1)
 		{
 			free(temp);
+			free(buf);
 			return (NULL);
 		}
 		temp[bytes] = '\0';
@@ -97,11 +98,11 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	buf = ft_read_line(fd, buf);
+	buf = ft_read_line(fd, buf); // Lit jusqu'a trouver un \n ou que read renvois 0
 	if (!buf)
 		return (NULL);
-	line = ft_get_line(buf);
-	buf = ft_new_buf(buf);
+	line = ft_get_line(buf); // Recuperer tout ce qui est avant le \n (donc la ligne)
+	buf = ft_next_buf(buf); // Set tout ce que est lu apres le \n dans la static
 	return (line);
 }
 
@@ -117,15 +118,84 @@ int	main(void)
 	char	*line;
 	int		i;
 	int		fd;
-	fd = open("test1.txt", O_RDONLY);
+
+	fd = open("read_error.txt", O_RDONLY);
 	i = 1;
-	while (i < 7)
+	while (i < 3)
 	{
 		line = get_next_line(fd);
+		fd = 6;
 		printf("line [%02d]: %s", i, line);
 		free(line);
 		i++;
 	}
 	close(fd);
 	return (0);
+}
+
+#include "get_next_line.h"
+# include <stdlib.h>
+# include <unistd.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
+size_t	ft_strlen(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
+
+int	ft_strchr(char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	if (!c)
+		return (0);
+	while (s[i])
+	{
+		if (s[i] == (char) c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*ft_strjoin(char *buf, char *temp)
+{
+	size_t	i;
+	size_t	j;
+	char	*str;
+
+	if (!buf)
+	{
+		buf = malloc(sizeof(char) * 1);
+		if (!buf)
+			return (NULL);
+		buf[0] = '\0';
+	}
+	if (!temp)
+		return (NULL);
+	str = malloc(sizeof(char) * (ft_strlen(buf) + ft_strlen(temp) + 1));
+	if (!str)
+		return (NULL);
+	i = -1;
+	j = 0;
+	while (buf[++i])
+		str[i] = buf[i];
+	while (temp[j] != '\0')
+		str[i++] = temp[j++];
+	str[ft_strlen(buf) + ft_strlen(temp)] = '\0';
+	free(buf);
+	return (str);
 }*/
