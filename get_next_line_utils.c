@@ -6,17 +6,11 @@
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:07:30 by naterrie          #+#    #+#             */
-/*   Updated: 2022/12/03 17:04:55 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2022/12/05 19:33:06 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-# include <stdlib.h>
-# include <unistd.h>
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
 
 size_t	ft_strlen(char *s)
 {
@@ -41,7 +35,7 @@ int	ft_strchr(char *s, int c)
 		return (0);
 	while (s[i])
 	{
-		if (s[i] == (char) c)
+		if (s[i] == (char)c)
 			return (1);
 		i++;
 	}
@@ -50,8 +44,8 @@ int	ft_strchr(char *s, int c)
 
 char	*ft_strjoin(char *buf, char *temp)
 {
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
 	char	*str;
 
 	if (!buf)
@@ -62,7 +56,7 @@ char	*ft_strjoin(char *buf, char *temp)
 		buf[0] = '\0';
 	}
 	if (!temp)
-		return (NULL);
+		return (free(buf = NULL), NULL);
 	str = malloc(sizeof(char) * (ft_strlen(buf) + ft_strlen(temp) + 1));
 	if (!str)
 		return (free(buf), NULL);
@@ -72,6 +66,6 @@ char	*ft_strjoin(char *buf, char *temp)
 		str[i] = buf[i];
 	while (temp[j] != '\0')
 		str[i++] = temp[j++];
-	str[ft_strlen(buf) + ft_strlen(temp)] = '\0';
+	str[i] = '\0';
 	return (free(buf), str);
 }
