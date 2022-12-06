@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 19:07:31 by naterrie          #+#    #+#             */
-/*   Updated: 2022/12/06 16:25:03 by naterrie         ###   ########lyon.fr   */
+/*   Created: 2022/12/06 16:23:54 by naterrie          #+#    #+#             */
+/*   Updated: 2022/12/06 16:24:15 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_get_line(char *buf)
 {
@@ -85,22 +85,22 @@ char	*ft_read_line(int fd, char *buf)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*buf;
+	static char	*buf[OPEN_MAX];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
-		if (buf)
-			free(buf);
+		if (buf[fd])
+			free(buf[fd]);
 		return (NULL);
 	}
-	buf = ft_read_line(fd, buf);
-	if (!buf)
+	buf[fd] = ft_read_line(fd, buf[fd]);
+	if (!buf[fd])
 		return (NULL);
-	line = ft_get_line(buf);
+	line = ft_get_line(buf[fd]);
 	if (!line)
-		return (free(buf), buf = NULL, buf);
-	buf = ft_next_buf(buf);
-	if (!buf)
-		return (free(buf), buf = NULL, line);
+		return (free(buf[fd]), buf[fd] = NULL, buf[fd]);
+	buf[fd] = ft_next_buf(buf[fd]);
+	if (!buf[fd])
+		return (free(buf[fd]), buf[fd] = NULL, line);
 	return (line);
 }
